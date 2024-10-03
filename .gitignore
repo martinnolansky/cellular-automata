@@ -1,8 +1,30 @@
-# Python
-venv/
+# Python cache files
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+
+# Virtual environment directories
+venv/
+env/
+.venv/
+.env/
+
+# SQLite database files (if you use SQLite)
+*.sqlite3
+
+# FastAPI specific files
+instance/
+.web/
+*.db
+
+# Alembic files (optional, if you want to exclude)
+alembic.ini
+alembic/
+versions/
+
+# Logs
+*.log
 
 # Node.js
 node_modules/
@@ -10,8 +32,13 @@ node_modules/
 # Environment variables
 .env
 
-# Logs
-*.log
 
-# MacOS specific
+# IDE and editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
 .DS_Store
+
+# Jupyter Notebook files
+.ipynb_checkpoints
