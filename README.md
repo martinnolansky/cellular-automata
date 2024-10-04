@@ -1,66 +1,110 @@
-# cellular-automata
+`# Cellular Automata Project
 
-Running the Application
-Running When Everything is Already Installed
-If you have already installed the necessary dependencies and set up the database, you can skip the installation steps and just run your application. Here’s how to do that:
+This project is a web application that integrates a cellular automata model with a FastAPI backend and a Next.js frontend. The project includes a PostgreSQL database for storing simulation data.
 
-1. Run the Database
-   If the database is not already running, you can start it with:
+## Features
+
+- Cellular automata implementation with pattern generation.
+- FastAPI backend for managing the cellular automata logic and API.
+- Next.js frontend for user interaction and visualization.
+- PostgreSQL database to store and retrieve simulation results.
+- Modular codebase with unit testing.
+
+## Requirements
+
+Before starting, ensure you have the following installed:
+
+- [Python 3.8+](https://www.python.org/)
+- [Node.js 18+](https://nodejs.org/)
+- [PostgreSQL](https://www.postgresql.org/) (for local database management)
+
+## Setup and Installation
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/your-repo/cellular-automata.git
+   cd cellular-automata`
+
+   ```
+
+2. **Install Backend and Frontend Dependencies**
+
+   You can install all dependencies for the backend and frontend by running the following command:
+
+   bash
+
+   Copy code
+
+   `make install`
+
+   - This will create a Python virtual environment in the project and install the required backend packages from `requirements.txt`.
+   - It will also install the necessary Node.js packages for the frontend.
+
+## Database Management
+
+The project uses PostgreSQL as its database. Ensure your PostgreSQL server is running and configured properly.
+
+1.  **Run Database Migrations**
+
+    After setting up the database, apply the necessary migrations with:
+
+    bash
+
+    Copy code
+
+    `make migrate`
+
+    This uses Alembic to handle database migrations.
+
+## Running the Application
+
+You can start both the backend and the frontend simultaneously or separately.
+
+1.  **Run Both Backend and Frontend**
+
+    To run both the backend (FastAPI) and the frontend (Next.js), execute:
+
+    bash
+
+    Copy code
+
+    `make run`
+
+2.  **Run Backend Only**
+
+    To start just the FastAPI backend:
+
+    bash
+
+    Copy code
+
+    `make run-backend`
+
+3.  **Run Frontend Only**
+
+    To start only the Next.js frontend:
+
+    bash
+
+    Copy code
+
+    `make run-frontend`
+
+## Clean Up
+
+To clean up the project environment (remove virtual environment and clear cache files):
 
 bash
+
 Copy code
-make db 2. Run the Application
-Then, run the application using:
 
-bash
-Copy code
-make run
-This command will:
+`make clean`
 
-Build the Docker containers if they are not built yet.
-Start both the backend and frontend services.
-Summary of Commands
-From Scratch:
+## License
 
-bash
-Copy code
-make all
-When Everything is Already Installed:
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
-bash
-Copy code
-make db # Only if the database is not running
-make run
+## Contributors
 
-To use this Makefile effectively:
-
-Start your development session:
-
-bashCopymake db # Start the database
-make install # Install dependencies (first time only)
-make migrate # Run database migrations
-make run # Start both frontend and backend
-
-During development:
-
-bashCopymake db-logs # Check database logs if needed
-
-When you're done:
-
-bashCopymake db-stop # Stop the database
-
-If you need to start fresh:
-
-bashCopymake clean # Clean up everything
-A few important notes:
-
-The db target uses Docker to run PostgreSQL. Make sure Docker is installed and running on your system.
-The database starts with these default credentials:
-
-User: postgres
-Password: postgres
-Database: automata_db
-Port: 5432
-
-The run target automatically ensures the database is running before starting the backend and frontend.
-If you need to modify the database configuration, you'll want to update both the db target in the Makefile and your application's database connection settings.
+Martin (Technology Graduate at Sky, working on generative AI and software engineering)
