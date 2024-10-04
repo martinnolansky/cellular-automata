@@ -1,4 +1,4 @@
-`# Cellular Automata Project
+# Cellular Automata Project
 
 This project is a web application that integrates a cellular automata model with a FastAPI backend and a Next.js frontend. The project includes a PostgreSQL database for storing simulation data.
 
@@ -24,18 +24,12 @@ Before starting, ensure you have the following installed:
 
    ```bash
    git clone https://github.com/your-repo/cellular-automata.git
-   cd cellular-automata`
-
+   cd cellular-automata
    ```
 
 2. **Install Backend and Frontend Dependencies**
 
    You can install all dependencies for the backend and frontend by running the following command:
-
-   bash
-
-   Copy code
-
    `make install`
 
    - This will create a Python virtual environment in the project and install the required backend packages from `requirements.txt`.
@@ -48,11 +42,6 @@ The project uses PostgreSQL as its database. Ensure your PostgreSQL server is ru
 1.  **Run Database Migrations**
 
     After setting up the database, apply the necessary migrations with:
-
-    bash
-
-    Copy code
-
     `make migrate`
 
     This uses Alembic to handle database migrations.
@@ -64,20 +53,11 @@ You can start both the backend and the frontend simultaneously or separately.
 1.  **Run Both Backend and Frontend**
 
     To run both the backend (FastAPI) and the frontend (Next.js), execute:
-
-    bash
-
-    Copy code
-
     `make run`
 
 2.  **Run Backend Only**
 
     To start just the FastAPI backend:
-
-    bash
-
-    Copy code
 
     `make run-backend`
 
@@ -85,26 +65,18 @@ You can start both the backend and the frontend simultaneously or separately.
 
     To start only the Next.js frontend:
 
-    bash
-
-    Copy code
-
     `make run-frontend`
 
 ## Clean Up
 
 To clean up the project environment (remove virtual environment and clear cache files):
 
-bash
-
-Copy code
-
 `make clean`
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License.
 
 ## Contributors
 
-Martin (Technology Graduate at Sky, working on generative AI and software engineering)
+Martin - Technology Graduate at Sky
