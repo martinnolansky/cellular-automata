@@ -1,3 +1,10 @@
+"""
+This FastAPI application generates cellular automata patterns based on a provided rule and size.
+It supports CORS for frontend integration and stores automata run data (rule, size, pattern, timestamp)
+in a PostgreSQL database using SQLAlchemy. The application manages the database connection lifecycle 
+using FastAPI's lifespan context manager.
+"""
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -7,40 +14,38 @@ from app.models import Run
 import datetime
 import json
 
-app = FastAPI()
+async def lifespan(app: FastAPI):
+    await connect()
+    yield
+    await disconnect()
 
-# CORS configuration
-origins = [
-    "http://localhost:3000",  # Your frontend URL
-]
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Allows requests from these origins
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 class AutomatonRequest(BaseModel):
     rule: int
-    size: int = 10  # Default size
+    size: int = 10
 
 @app.post("/automata")
 async def generate_pattern(request: AutomatonRequest):
     automaton = CellularAutomaton(request.rule, request.size)
     pattern = automaton.run()
 
-    # Create a Run object
     run_record = Run(
         rule=request.rule,
         size=request.size,
-        pattern=json.dumps(pattern),  # Serialize the pattern to a JSON string
+        pattern=json.dumps(pattern),
         timestamp=datetime.datetime.now()
     )
 
     try:
-        # Insert into the database using SQLAlchemy's ORM
         query = Run.__table__.insert().values(
             rule=run_record.rule,
             size=run_record.size,
@@ -49,15 +54,6 @@ async def generate_pattern(request: AutomatonRequest):
         )
         await database.execute(query)
     except Exception as e:
-        return {"error": str(e)}  # Return the error message
+        return {"error": str(e)}
 
     return {"pattern": pattern}
-
-# Startup and shutdown functions
-@app.on_event("startup")
-async def startup_event():
-    await connect()
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    await disconnect()

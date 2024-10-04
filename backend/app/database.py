@@ -1,17 +1,14 @@
 from sqlalchemy import MetaData
 from databases import Database
-import os
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
-# Get the local database URL
 def get_database_url():
     url = os.getenv("LOCAL_DATABASE_URL")
-    
     if not url:
         raise ValueError("No database URL provided. Please set LOCAL_DATABASE_URL in your environment.")
-    
     return url
 
 DATABASE_URL = get_database_url()

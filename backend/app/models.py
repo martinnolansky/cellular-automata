@@ -4,10 +4,10 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 class Run(Base):
-    __tablename__ = 'automaton_runs'  # Make sure this matches your DB table
+    __tablename__ = 'automaton_runs'
 
     id = Column(Integer, primary_key=True, index=True)
     rule = Column(Integer)
     size = Column(Integer)
-    pattern = Column(String)  # Adjust type based on your pattern format
+    pattern = Column(String)
     timestamp = Column(DateTime)
