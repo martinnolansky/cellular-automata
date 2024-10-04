@@ -29,9 +29,14 @@ versions/
 # Node.js
 node_modules/
 
+# Next.js files to ignore
+.next/
+.next/cache/
+static/
+trace/
+
 # Environment variables
 .env
-
 
 # IDE and editor specific files
 .vscode/
