@@ -1,19 +1,3 @@
-"""
-CellularAutomaton Class Overview:
-
-This class implements a 1D Cellular Automaton that evolves based on a specified rule (0-255) and grid size.
-
-1. __init__(self, rule, size):
-   - Initializes the automaton with a rule and grid size. The grid starts with the center cell active.
-
-2. apply_rule(self, left, center, right):
-   - Applies the rule to a triplet of cells (left, center, right) to determine the next state of the center cell.
-
-3. run(self):
-   - Runs the automaton for a number of generations (equal to grid size), updating the grid according to the rule.
-   - Returns the state of the grid for each generation.
-"""
-
 class CellularAutomaton:
     def __init__(self, rule, size):
         self.rule = rule

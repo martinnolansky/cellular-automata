@@ -1,11 +1,10 @@
-from sqlalchemy import MetaData
 from databases import Database
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
-def get_database_url():
+def get_database_url() -> str:
     url = os.getenv("LOCAL_DATABASE_URL")
     if not url:
         raise ValueError("No database URL provided. Please set LOCAL_DATABASE_URL in your environment.")
@@ -13,7 +12,6 @@ def get_database_url():
 
 DATABASE_URL = get_database_url()
 database = Database(DATABASE_URL)
-metadata = MetaData()
 
 async def connect():
     try:

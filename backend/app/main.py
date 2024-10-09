@@ -1,11 +1,4 @@
-"""
-This FastAPI application generates cellular automata patterns based on a provided rule and size.
-It supports CORS for frontend integration and stores automata run data (rule, size, pattern, timestamp)
-in a PostgreSQL database using SQLAlchemy. The application manages the database connection lifecycle 
-using FastAPI's lifespan context manager.
-"""
-
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from app.automata import CellularAutomaton
@@ -31,10 +24,17 @@ app.add_middleware(
 
 class AutomatonRequest(BaseModel):
     rule: int
-    size: int = 10
+    size: int = 10 
 
 @app.post("/automata")
 async def generate_pattern(request: AutomatonRequest):
+    
+    if request.rule < 0 or request.rule > 255:
+        raise HTTPException(status_code=400, detail="Rule must be between 0 and 255.")
+
+    if request.size < 1:
+        raise HTTPException(status_code=400, detail="Size must be at least 1.")
+
     automaton = CellularAutomaton(request.rule, request.size)
     pattern = automaton.run()
 
@@ -44,7 +44,6 @@ async def generate_pattern(request: AutomatonRequest):
         pattern=json.dumps(pattern),
         timestamp=datetime.datetime.now()
     )
-
     try:
         query = Run.__table__.insert().values(
             rule=run_record.rule,
@@ -54,6 +53,6 @@ async def generate_pattern(request: AutomatonRequest):
         )
         await database.execute(query)
     except Exception as e:
-        return {"error": str(e)}
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
 
     return {"pattern": pattern}
