@@ -11,5 +11,3 @@ class Run(Base):
     size = Column(Integer)
     pattern = Column(String)
     timestamp = Column(DateTime)
-
-#TODO - UPDATE DATABASE TO INCLUDE MORE COLUMNS & TRY GET THIS WORKING WITH DOCKER

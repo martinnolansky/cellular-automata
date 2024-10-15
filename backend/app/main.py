@@ -42,7 +42,7 @@ async def generate_pattern(request: AutomatonRequest):
     if request.rule < 0 or request.rule > 255:
         raise HTTPException(status_code=400, detail="Rule must be between 1 and 256.")
     if request.size < 1:
-        raise HTTPException(status_code=400, detail="Size must be between 1 and 1000.")
+        raise HTTPException(status_code=400, detail="Generations must be between 1 and 1000.")
 
     rule_data = load_rule_data(request.rule)
     basic_rules = rule_data["basic_rules"]
