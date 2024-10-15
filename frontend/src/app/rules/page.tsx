@@ -14,6 +14,7 @@ interface Rule {
 const Rules = () => {
   const [rules, setRules] = useState<Rule[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
   const { darkMode } = useDarkMode();
 
   useEffect(() => {
@@ -25,6 +26,8 @@ const Rules = () => {
         setRules(response.data);
       } catch (error) {
         console.error("Error fetching rules:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -52,7 +55,6 @@ const Rules = () => {
 
       <div className="overflow-x-auto w-full max-w-7xl">
         <div className="overflow-y-auto max-h-[40rem]">
-          {" "}
           <table className="min-w-full bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
             <thead className="bg-gray-200 dark:bg-gray-700">
               <tr>
@@ -62,7 +64,19 @@ const Rules = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredRules.length > 0 ? (
+              {loading ? (
+                <tr>
+                  <td className="border px-2 py-1 animate-pulse bg-gray-300">
+                    Loading...
+                  </td>
+                  <td className="border px-2 py-1 animate-pulse bg-gray-300">
+                    Loading...
+                  </td>
+                  <td className="border px-2 py-1 animate-pulse bg-gray-300">
+                    Loading...
+                  </td>
+                </tr>
+              ) : filteredRules.length > 0 ? (
                 filteredRules.map((rule) => (
                   <tr
                     key={rule.rule_number}
