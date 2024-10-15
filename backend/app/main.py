@@ -6,6 +6,17 @@ from app.database import connect, disconnect, database
 from app.models import Run
 import datetime
 import json
+import os
+
+RULES_JSON_PATH = os.path.join("frontend", "public", "static", "cellular_automata_rules.json")
+
+def load_rule_data(rule_number):
+    with open(RULES_JSON_PATH, 'r') as file:
+        rules = json.load(file)
+    rule_data = next((rule for rule in rules if rule["rule_number"] == rule_number), None)
+    if not rule_data:
+        raise HTTPException(status_code=404, detail=f"Rule {rule_number} not found in JSON file.")
+    return rule_data
 
 async def lifespan(app: FastAPI):
     await connect()
@@ -24,18 +35,19 @@ app.add_middleware(
 
 class AutomatonRequest(BaseModel):
     rule: int
-    size: int = 10 
+    size: int = 10
 
 @app.post("/automata")
 async def generate_pattern(request: AutomatonRequest):
-    
     if request.rule < 0 or request.rule > 255:
-        raise HTTPException(status_code=400, detail="Rule must be between 0 and 255.")
-
+        raise HTTPException(status_code=400, detail="Rule must be between 1 and 256.")
     if request.size < 1:
-        raise HTTPException(status_code=400, detail="Size must be at least 1.")
+        raise HTTPException(status_code=400, detail="Size must be between 1 and 1000.")
 
-    automaton = CellularAutomaton(request.rule, request.size)
+    rule_data = load_rule_data(request.rule)
+    basic_rules = rule_data["basic_rules"]
+
+    automaton = CellularAutomaton(basic_rules, request.size)
     pattern = automaton.run()
 
     run_record = Run(

@@ -47,10 +47,13 @@ export function PatternGrid({ pattern, size, darkMode }: PatternGridProps) {
 
   return (
     <div
-      className="flex items-center overflow-auto"
-      style={{ maxWidth: "100%", maxHeight: "80vh" }}
+      className="flex items-center justify-center"
+      style={{ maxWidth: "100%", maxHeight: "80vh", overflow: "hidden" }}
     >
-      <canvas ref={canvasRef} />
+      <canvas
+        ref={canvasRef}
+        className="transition-opacity duration-300 opacity-100"
+      />
     </div>
   );
 }
